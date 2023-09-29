@@ -13,6 +13,20 @@ function FormSingUp({handleSubmit}){
     const[prom, setProm] = useState(true)
     const[nov, setNov] = useState(false)
     
+    const [errors, setErrors] = useState({
+        name:{
+            error: false,
+            menssage: ""
+        }
+    })
+
+    function validarNombre(nombre) {
+        if(nombre.length>=3){
+            return { name:{ error: false, menssage:""}}
+        }else{
+            return { name:{ error: true, menssage:"Debe ser de minimo 3 caracteres"}}
+        }
+    }
 
     return <form onSubmit={(e)=>{
         e.preventDefault()
@@ -31,6 +45,12 @@ function FormSingUp({handleSubmit}){
                     setName(e.target.value)
                 }
             }
+            error={errors.name.error}
+            helperText={
+                errors.name.error ? errors.name.menssage : ""
+            }
+
+            onBlur={(e)=> setErrors(validarNombre(e.target.value))}
         />
 
         <TextField 
